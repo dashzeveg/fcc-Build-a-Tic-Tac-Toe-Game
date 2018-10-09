@@ -1,0 +1,155 @@
+body {
+  margin: 0;
+  padding: 0;
+  margin-top: 100px;
+  font-family: Tahoma;
+  text-align: center;
+}
+
+.main {
+  width: 326px;
+  height: 380px;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  /*border: 1px solid red;*/
+  position: relative;
+  text-align: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+  width: 306px;
+  height: 306px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.grid-item {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  font-size: 60px;
+  text-align: center;
+  line-height: 100px;
+  position: relative;
+  z-index: 1;
+}
+
+
+.grid-item-opacity {
+  opacity: 0.2;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.infos {
+  width: 326px;
+  position: absolute;
+  margin-top: 120px;
+  text-align: center;
+  color: #fff;
+  z-index: 10;
+  font-size: 20px;
+}
+
+.answer {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.answer > span {
+  padding: 0px 10px 0px 10px;
+}
+
+.answer > span:hover {
+  border: 1px dotted #fff;
+  cursor: pointer;
+}
+
+.symbol {
+  font-size: 28px;
+}
+
+.reset {
+  display: inline-block;
+  margin: 10px;
+  padding: 5px 10px 5px 10px;
+}
+
+.reset:hover {
+  border: 1px dotted #000;
+  cursor: pointer;
+}
+
+.back {
+  width: 326px;
+  position: absolute;
+  margin-top: 120px;
+  text-align: center;
+  color: #fff;
+  z-index: 10;
+  bottom: 80px;
+}
+
+.back:hover {
+  cursor: pointer;
+}
+
+.player1-label {
+  display: inline;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 130px;
+  padding: 5px 5px 5px 5px;
+  background: rgba(0,200,200,1);
+  text-align: center;
+}
+
+.player2-label {
+  display: inline;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  width: 130px;
+  padding: 5px 5px 5px 5px;
+  background: rgba(200,100,100,1);
+  text-align: center;
+}
+
+.player-label-up {
+  top: -29px;
+  transition-duration: 0.5s;
+  transition-timing-function: linear;
+  transition-delay: -0.1s;
+}
+
+.player-label-down {
+  top: 0px;
+  transition-duration: 0.5s;
+  transition-timing-function: linear;
+  transition-delay: -0.1s;
+}
+
+.author {
+  font-family: Tahoma;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: #000000;
+  a {
+  text-decoration: none;
+  color: #00264d;
+  
+  &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,395 @@
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <Main />
+        <Author />
+      </div>
+    );
+  }
+}
+
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { playerCount: 0, player1: 0, player2: 0, turn: 0, info: 0, cell: ',,,,,,,,' };
+    
+    this.playerCount = this.playerCount.bind(this);
+    this.back = this.back.bind(this);
+    this.choose = this.choose.bind(this);
+    this.reset = this.reset.bind(this);
+    this.fill = this.fill.bind(this);
+    this.splitArray = this.splitArray.bind(this);
+
+  }
+  
+  playerCount(e) {
+    this.setState({ playerCount: e.target.getAttribute('value') });
+  }
+  
+  back() {
+    this.setState({ playerCount: 0 });
+  }
+  
+  choose(e) {
+    if(e.target.getAttribute('value') == 'x')
+      this.setState({ player1: e.target.getAttribute('value'), player2: 'o', turn: 1 });
+    else
+      this.setState({ player1: e.target.getAttribute('value'), player2: 'x', turn: 1 });
+  }
+  
+  reset() {
+    this.setState({ playerCount: 0, player1: 0, player2: 0, turn: 0, info: 0, cell: ',,,,,,,,' });
+  }
+  
+  fill(e) {
+    if(this.state.player1!=0){
+      
+      let symbol = '';
+      let info = '';
+      
+      if(this.state.playerCount == 1){
+        let arr;
+        arr = this.state.cell.split(',');
+        
+        info = 'Uh oh, you lost ...';
+        
+        if(this.state.turn==1){
+          if(arr[e.target.getAttribute('value')] === ''){
+            this.setState({ turn: 2 });
+            symbol = this.state.player1;
+            info = 'Yeah, you win ...';
+            
+            arr[e.target.getAttribute('value')] = symbol
+            this.setState({ cell: arr.join(',') });
+            
+            if((arr[0] == symbol && arr[1] == symbol && arr[2] == symbol) || 
+             (arr[3] == symbol && arr[4] == symbol && arr[5] == symbol) || 
+             (arr[6] == symbol && arr[7] == symbol && arr[8] == symbol) || 
+             (arr[0] == symbol && arr[3] == symbol && arr[6] == symbol) || 
+             (arr[1] == symbol && arr[4] == symbol && arr[7] == symbol) || 
+             (arr[2] == symbol && arr[5] == symbol && arr[8] == symbol) || 
+             (arr[0] == symbol && arr[4] == symbol && arr[8] == symbol) || 
+             (arr[2] == symbol && arr[4] == symbol && arr[6] == symbol)){
+              this.setState({ turn: 0, info: info });
+            }else{
+              if(arr[0] != '' && arr[1] != '' && arr[2] != '' && arr[3] != '' && arr[4] != '' && arr[5] != '' && arr[6] != '' && arr[7] != '' && arr[8] != ''){
+                this.setState({ turn: 0, info: 'It was a draw ...' });
+              }
+            }
+            
+          }
+          
+        //}else{
+          this.setState({ turn: 1 });
+          symbol = this.state.player2;
+          info = 'Uh oh, you lost ...';
+          
+          if((arr[0] == this.state.player1 && arr[1] == this.state.player1) && arr[2] === ''){
+             arr[2] = symbol;
+          }else if((arr[0] == this.state.player1 && arr[2] == this.state.player1) && arr[1] === ''){
+             arr[1] = symbol;
+          }else if((arr[1] == this.state.player1 && arr[2] == this.state.player1) && arr[0] === ''){
+             arr[0] = symbol;
+          }else if((arr[3] == this.state.player1 && arr[4] == this.state.player1) && arr[5] === ''){
+             arr[5] = symbol;
+          }else if((arr[3] == this.state.player1 && arr[5] == this.state.player1) && arr[4] === ''){
+             arr[4] = symbol;
+          }else if((arr[4] == this.state.player1 && arr[5] == this.state.player1) && arr[3] === ''){
+             arr[3] = symbol;
+          }else if((arr[6] == this.state.player1 && arr[7] == this.state.player1) && arr[8] === ''){
+             arr[8] = symbol;
+          }else if((arr[6] == this.state.player1 && arr[8] == this.state.player1) && arr[7] === ''){
+             arr[7] = symbol;
+          }else if((arr[7] == this.state.player1 && arr[8] == this.state.player1) && arr[6] === ''){
+             arr[6] = symbol;
+          }else if((arr[0] == this.state.player1 && arr[3] == this.state.player1) && arr[6] === ''){
+             arr[6] = symbol;
+          }else if((arr[0] == this.state.player1 && arr[6] == this.state.player1) && arr[3] === ''){
+             arr[3] = symbol;
+          }else if((arr[3] == this.state.player1 && arr[6] == this.state.player1) && arr[0] === ''){
+             arr[0] = symbol;
+          }else if((arr[1] == this.state.player1 && arr[4] == this.state.player1) && arr[7] === ''){
+             arr[7] = symbol;
+          }else if((arr[1] == this.state.player1 && arr[7] == this.state.player1) && arr[4] === ''){
+             arr[4] = symbol;
+          }else if((arr[4] == this.state.player1 && arr[7] == this.state.player1) && arr[1] === ''){
+             arr[1] = symbol;
+          }else if((arr[2] == this.state.player1 && arr[5] == this.state.player1) && arr[8] === ''){
+             arr[8] = symbol;
+          }else if((arr[2] == this.state.player1 && arr[8] == this.state.player1) && arr[5] === ''){
+             arr[5] = symbol;
+          }else if((arr[5] == this.state.player1 && arr[8] == this.state.player1) && arr[2] === ''){
+             arr[2] = symbol;
+          }else if((arr[0] == this.state.player1 && arr[4] == this.state.player1) && arr[8] === ''){
+             arr[8] = symbol;
+          }else if((arr[0] == this.state.player1 && arr[8] == this.state.player1) && arr[4] === ''){
+             arr[4] = symbol;
+          }else if((arr[4] == this.state.player1 && arr[8] == this.state.player1) && arr[0] === ''){
+             arr[0] = symbol;
+          }else if((arr[2] == this.state.player1 && arr[4] == this.state.player1) && arr[6] === ''){
+             arr[6] = symbol;
+          }else if((arr[2] == this.state.player1 && arr[6] == this.state.player1) && arr[4] === ''){
+             arr[4] = symbol;
+          }else if((arr[4] == this.state.player1 && arr[6] == this.state.player1) && arr[2] === ''){
+             arr[2] = symbol;
+          }else{
+            if(arr[4] === ''){
+              arr[4] = symbol;
+            }else if(arr[0] === ''){
+              arr[0] = symbol;
+            }else if(arr[2] === ''){
+              arr[2] = symbol;
+            }else if(arr[6] === ''){
+              arr[6] = symbol;
+            }else if(arr[8] === ''){
+              arr[8] = symbol;
+            }else if(arr[1] === ''){
+              arr[1] = symbol;
+            }else if(arr[3] === ''){
+              arr[3] = symbol;
+            }else if(arr[5] === ''){
+              arr[5] = symbol;
+            }else if(arr[7] === ''){
+              arr[7] = symbol;
+            }
+          }
+        }
+        
+        this.setState({ cell: arr.join(',') });
+        
+          if((arr[0] == symbol && arr[1] == symbol && arr[2] == symbol) || 
+             (arr[3] == symbol && arr[4] == symbol && arr[5] == symbol) || 
+             (arr[6] == symbol && arr[7] == symbol && arr[8] == symbol) || 
+             (arr[0] == symbol && arr[3] == symbol && arr[6] == symbol) || 
+             (arr[1] == symbol && arr[4] == symbol && arr[7] == symbol) || 
+             (arr[2] == symbol && arr[5] == symbol && arr[8] == symbol) || 
+             (arr[0] == symbol && arr[4] == symbol && arr[8] == symbol) || 
+             (arr[2] == symbol && arr[4] == symbol && arr[6] == symbol)){
+            this.setState({ turn: 0, info: info });
+          }else{
+            if(arr[0] != '' && arr[1] != '' && arr[2] != '' && arr[3] != '' && arr[4] != '' && arr[5] != '' && arr[6] != '' && arr[7] != '' && arr[8] != ''){
+              this.setState({ turn: 0, info: 'It was a draw ...' });
+            }
+          }
+        
+      }else{
+        
+        let arr;
+        arr = this.state.cell.split(',');
+        
+        if(arr[e.target.getAttribute('value')] === ''){
+          
+          if(this.state.turn==1){
+            this.setState({ turn: 2 });
+            symbol = this.state.player1;
+            info = 'Player 1 wins!! :D';
+          }else{
+            this.setState({ turn: 1 });
+            symbol = this.state.player2;
+            info = 'Player 2 wins!! :D';
+          }
+        
+          arr[e.target.getAttribute('value')] = symbol
+          this.setState({ cell: arr.join(',') });
+          
+          if((arr[0] == symbol && arr[1] == symbol && arr[2] == symbol) || 
+             (arr[3] == symbol && arr[4] == symbol && arr[5] == symbol) || 
+             (arr[6] == symbol && arr[7] == symbol && arr[8] == symbol) || 
+             (arr[0] == symbol && arr[3] == symbol && arr[6] == symbol) || 
+             (arr[1] == symbol && arr[4] == symbol && arr[7] == symbol) || 
+             (arr[2] == symbol && arr[5] == symbol && arr[8] == symbol) || 
+             (arr[0] == symbol && arr[4] == symbol && arr[8] == symbol) || 
+             (arr[2] == symbol && arr[4] == symbol && arr[6] == symbol)){
+            this.setState({ turn: 0, info: info });
+          }else{
+            if(arr[0] != '' && arr[1] != '' && arr[2] != '' && arr[3] != '' && arr[4] != '' && arr[5] != '' && arr[6] != '' && arr[7] != '' && arr[8] != ''){
+              this.setState({ turn: 0, info: 'It was a draw ...' });
+            }
+          }
+        
+          /*
+          let win;
+
+          win = 0;
+          if(arr[0] == symbol)
+            win++;
+          if(arr[1] == symbol)
+            win++;
+          if(arr[2] == symbol)
+            win++;
+
+          if(win == 3){
+            this.setState({ turn: 0, info: 'Player ' + win_player + ' wins!! :D' });
+          }
+
+          win = 0;
+          if(arr[3] == symbol)
+            win++;
+          if(arr[4] == symbol)
+            win++;
+          if(arr[5] == symbol)
+            win++;
+
+          if(win == 3){
+            this.setState({ turn: 0, info: 'Player ' + win_player + ' wins!! :D' });
+          }
+
+          win = 0;
+          if(arr[6] == symbol)
+            win++;
+          if(arr[7] == symbol)
+            win++;
+          if(arr[8] == symbol)
+            win++;
+
+          if(win == 3){
+            this.setState({ turn: 0, info: 'Player ' + win_player + ' wins!! :D' });
+          }
+
+          win = 0;
+          if(arr[0] == symbol)
+            win++;
+          if(arr[3] == symbol)
+            win++;
+          if(arr[6] == symbol)
+            win++;
+
+          if(win == 3){
+            this.setState({ turn: 0, info: 'Player ' + win_player + ' wins!! :D' });
+          }
+
+          win = 0;
+          if(arr[1] == symbol)
+            win++;
+          if(arr[4] == symbol)
+            win++;
+          if(arr[7] == symbol)
+            win++;
+
+          if(win == 3){
+            this.setState({ turn: 0, info: 'Player ' + win_player + ' wins!! :D' });
+          }
+
+          win = 0;
+          if(arr[2] == symbol)
+            win++;
+          if(arr[5] == symbol)
+            win++;
+          if(arr[8] == symbol)
+            win++;
+
+          if(win == 3){
+            this.setState({ turn: 0, info: 'Player ' + win_player + ' wins!! :D' });
+          }
+
+          win = 0;
+          if(arr[0] == symbol)
+            win++;
+          if(arr[4] == symbol)
+            win++;
+          if(arr[8] == symbol)
+            win++;
+
+          if(win == 3){
+            this.setState({ turn: 0, info: 'Player ' + win_player + ' wins!! :D' });
+          }
+
+          win = 0;
+          if(arr[2] == symbol)
+            win++;
+          if(arr[4] == symbol)
+            win++;
+          if(arr[6] == symbol)
+            win++;
+
+          if(win == 3){
+            this.setState({ turn: 0, info: 'Player ' + win_player + ' wins!! :D' });
+          }
+          */
+        }
+      }
+    }
+  }
+  
+  splitArray(i){
+    return this.state.cell.split(',')[i];
+  }
+  
+  render() {
+    return (
+      <div className="main">
+        <div className={this.state.turn!=0 && this.state.turn==1 ? "player1-label player-label-up":"player1-label player-label-down"}>{this.state.player1+': '}{this.state.playerCount==1?"Your turn!":"Go Player 1!"}</div>
+        <div className={this.state.turn!=0 && this.state.turn==2 ? "player2-label player-label-up":"player2-label player-label-down"}>{this.state.player2+': '}{this.state.playerCount==1?"Computer's turn":"Go Player 2!"}</div>
+        {this.state.info != 0 &&
+        <div className="infos">
+          {this.state.info}
+        </div>
+        }
+        {this.state.playerCount == 0 &&
+        <div className="infos">
+          How do you want to play?
+          <div className="answer">
+            <span value="1" onClick={this.playerCount}>One Player</span>
+            <span value="2" onClick={this.playerCount}>Two Player</span>
+          </div>
+        </div>
+        }
+        {(this.state.playerCount != 0 && this.state.player1 == 0) &&
+        <div className="infos">
+          {this.state.playerCount == 2 ? 'Player 1 : ' : ''}Would you like to be 
+            <span className="symbol"> x</span> or <span className="symbol">o</span>?
+          <div className="answer">
+            <span value="x" onClick={this.choose}>x</span>
+            <span value="o" onClick={this.choose}>o</span>
+          </div>
+        </div>
+        }
+        {(this.state.playerCount != 0 && this.state.player1 == 0) &&
+        <div className="back" onClick={this.back}><i className="fa fa-arrow-left"></i> Back</div>
+        }
+        
+        <div className="grid-container">
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="0" onClick={this.fill}>{this.splitArray(0)}</div>
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="1" onClick={this.fill}>{this.splitArray(1)}</div>
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="2" onClick={this.fill}>{this.splitArray(2)}</div>
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="3" onClick={this.fill}>{this.splitArray(3)}</div>
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="4" onClick={this.fill}>{this.splitArray(4)}</div>
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="5" onClick={this.fill}>{this.splitArray(5)}</div>
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="6" onClick={this.fill}>{this.splitArray(6)}</div>
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="7" onClick={this.fill}>{this.splitArray(7)}</div>
+          <div className={this.state.turn == 0 ? 'grid-item grid-item-opacity' : 'grid-item pointer'} value="8" onClick={this.fill}>{this.splitArray(8)}</div>
+        </div>
+        {this.state.player1 != 0 &&
+        <div className="reset" onClick={this.reset}>Reset All</div>
+        }
+      </div>
+    );
+  }
+}
+
+class Author extends React.Component {
+  render() {
+    return (
+      <div className="author">
+        Designed and Coded By<br />
+        <a target="_blank" href="https://codepen.io/dashzeveg">Dashzeveg</a>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('app'));
+
+/*
+$(document).ready(function(){
+  $('#app').click(function() {
+    $(this).css('color', 'red');
+  });
+});
+*/
